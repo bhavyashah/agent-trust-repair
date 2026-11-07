@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+.dev.vars
+.env
+dist/
+.venv/
+__pycache__/
+runs/
+.claude/
+wr.log
+agent/memory.json

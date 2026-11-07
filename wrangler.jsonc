@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "guidedot-formremediation",
+  "main": "src/worker.js",
+  "account_id": "2ef6eda7b5b7be6546ee156c7502b4b6",
+  "compatibility_date": "2026-09-13",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "guidedot.io/formremediation*", "zone_name": "guidedot.io" }
+  ],
+  "vars": {
+    "GOOGLE_CLOUD_PROJECT": "soe-ai-accessibility",
+    "GEMINI_MODEL": "gemini-3.5-flash",
+    "MAIL_FROM": "reimbursements@guidedot.io",
+    // Demo mode: every outcome email goes here instead of to the submitter. Remove to email submitters.
+    "NOTIFY_TO": "you@example.com"
+  },
+  // GOOGLE_VERTEX_KEY is the same Vertex AI key the buoyancy labs use (wrangler secret put GOOGLE_VERTEX_KEY).
+  // Outcome emails. Delivery to any address needs Email Sending onboarded for guidedot.io;
+  // with only Email Routing, Cloudflare delivers to the account's verified addresses.
+  "send_email": [{ "name": "EMAIL" }],
+  "secrets": { "required": ["GOOGLE_VERTEX_KEY"] },
+  "ratelimits": [
+    { "name": "SUBMIT", "namespace_id": "2026110601", "simple": { "limit": 10, "period": 60 } },
+    { "name": "RECIPIENT", "namespace_id": "2026110602", "simple": { "limit": 10, "period": 60 } }
+  ],
+  "observability": { "enabled": true }
+}
